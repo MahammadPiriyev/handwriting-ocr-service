@@ -62,8 +62,8 @@ Follow these instructions to set up the project on your local machine.
 1.  **Clone the repository:**
 
     ```sh
-    git clone https://github.com/MahammadPiriyev/T800-socar-ai.git
-    cd T800-socar-ai
+    git clone https://github.com/MahammadPiriyev/handwriting-ocr-service.git
+    cd handwriting-ocr-service
     ```
 
 2.  **Create and activate a virtual environment:**
