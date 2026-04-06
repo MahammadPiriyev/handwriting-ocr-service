@@ -1,40 +1,40 @@
 name: SOCAR AI CI/CD
 
 on:
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Deploy
-      env:
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        APP_DIR: ${{ secrets.APP_DIR }}
-        GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-        
-        ssh ${SERVER_USER}@${SERVER_HOST} << EOF
-          set -e
-          cd ${APP_DIR}
+      - name: Deploy
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          APP_DIR: ${{ secrets.APP_DIR }}
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-          git pull https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/MahammadPiriyev/T800-socar-ai.git main
+          ssh ${SERVER_USER}@${SERVER_HOST} << EOF
+            set -e
+            cd ${APP_DIR}
 
-          source venv/bin/activate
-          pip install -r requirements.txt
+            git pull https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/MahammadPiriyev/T800-socar-ai.git main
 
-          sudo systemctl restart socar-ai-app.service
-          sleep 3
-          sudo systemctl status socar-ai-app.service
-        EOF
+            source venv/bin/activate
+            pip install -r requirements.txt
+
+            sudo systemctl restart socar-ai-app.service
+            sleep 3
+            sudo systemctl status socar-ai-app.service
+          EOF
