@@ -1,0 +1,29 @@
+# Core API
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-dotenv==1.0.1
+pydantic==2.12.5
+python-multipart==0.0.12
+psycopg2-binary==2.9.11
+
+
+# PDF rendering
+PyMuPDF==1.24.14
+
+# Image processing (Win + Py3.12 compatible)
+numpy<2.3.0
+
+opencv-python-headless==4.12.0.88
+
+# OCR (Google Vision)
+requests>=2.32.0
+
+
+# LLM SDK (OpenAI + AzureOpenAI)
+openai==1.57.2
+
+# Retrieval
+rank-bm25==0.2.2
+
+# Optional: vector search (install only if you want FAISS on Windows)
+# faiss-cpu==1.9.0
